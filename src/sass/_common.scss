@@ -1,1 +1,35 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
+body{
+    padding: 10px 10px;
+
+}
+input{
+    height: 35px;
+}
+.query-btn{
+    margin-left: 5px;
+background-color: darkturquoise;
+color: #fff;
+border-radius: 5px;
+border-color: azure;
+}
+.form-box{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+.gallery{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.load-more{
+    background-color: darkturquoise;
+color: #fff;
+border-radius: 5px;
+border-color: azure;
+}
