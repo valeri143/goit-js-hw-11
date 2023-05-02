@@ -12,11 +12,10 @@ async function fetchImages (value, page=1){
         page : page,
     })
     const URL = `${BASE_URL}?${params}`;
-    return axios.get(URL, params).then((resp) => {
-        if(!resp.ok){
-            throw new Error(resp.status);
-        }
-        return resp.json();
-    });
+    const response = await axios.get(URL, params);
+    if(response.status !== 200){
+        throw new Error(response.status);
+    }
+    return response.data;
 }
 export {fetchImages}
