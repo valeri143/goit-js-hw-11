@@ -2,6 +2,7 @@ import { fetchImages } from "./fetchImages";
 import Notiflix from "notiflix";
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
+import axios from "axios";
 
 const form = document.querySelector("#search-form");
 const gallery = document.querySelector(".gallery")
@@ -25,10 +26,14 @@ fetchImages(inputQuery, page)
     }
     messegeAboutTotalHits(data.totalHits)
     gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits))
-    const lightbox = new SimpleLightbox('.gallery a', { /* options */ });
+   const lightbox = new SimpleLightbox('.gallery a', { /* options */ });
     if(page !== data.totalHits){
       return btnLoadMore.hidden = false;
     }
+    if(data.total=== data.totalHits){
+       return btnLoadMore.hidden = true;
+    }
+    
 })
 .catch(err => console.log(err))}
 
@@ -64,11 +69,11 @@ function onLoadMore (){
   page += 1;
   fetchImages(inputQuery, page)
   .then(data => {
-      gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits))
-      lightbox.refresh();
-  if(page === data.totalHits){
-    btnLoadMore.hidden = true;
-    Notiflix.Report.info("We're sorry, but you've reached the end of search results.");
+  gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits))
+lightbox.refresh()
+  if(data.total=== data.totalHits){
+  Notiflix.Report.info("We're sorry, but you've reached the end of search results.");
+ btnLoadMore.hidden = true;
   }
   })
   .catch(err => console.log(err))}
@@ -78,5 +83,4 @@ function onLoadMore (){
 
   function messegeAboutTotalHits(totalHits){
     Notiflix.Report.info(`Hooray! We found ${totalHits} images.`);
-    
   }
