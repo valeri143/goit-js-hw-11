@@ -27,13 +27,13 @@ fetchImages(inputQuery, page)
     messegeAboutTotalHits(data.totalHits)
     gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits))
    const lightbox = new SimpleLightbox('.gallery a', { /* options */ });
+   if(data.hits.length === data.totalHits){
+    return btnLoadMore.hidden = true;
+ }
     if(page !== data.totalHits){
       return btnLoadMore.hidden = false;
     }
-    if(data.total=== data.totalHits){
-       return btnLoadMore.hidden = true;
-    }
-    
+  
 })
 .catch(err => console.log(err))}
 
@@ -70,10 +70,10 @@ function onLoadMore (){
   fetchImages(inputQuery, page)
   .then(data => {
   gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits))
-lightbox.refresh()
-  if(data.total=== data.totalHits){
-  Notiflix.Report.info("We're sorry, but you've reached the end of search results.");
- btnLoadMore.hidden = true;
+  const lightboxLoadMore = new SimpleLightbox('.gallery a', { /* options */ });
+  if(data.total === data.totalHits){
+Notiflix.Report.info("We're sorry, but you've reached the end of search results.");
+ return btnLoadMore.hidden = true;
   }
   })
   .catch(err => console.log(err))}
