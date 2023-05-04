@@ -7,6 +7,7 @@ import axios from "axios";
 const form = document.querySelector("#search-form");
 const gallery = document.querySelector(".gallery")
 const btnLoadMore = document.querySelector(".load-more")
+const lightbox = new SimpleLightbox('.gallery a', { /* options */ });
 let inputQuery =""
 let page = 1;
 form.addEventListener('submit', onSubmit);
@@ -25,8 +26,8 @@ fetchImages(inputQuery, page)
         return btnLoadMore.hidden = true;
     }
     messegeAboutTotalHits(data.totalHits)
-    gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits))
-   const lightbox = new SimpleLightbox('.gallery a', { /* options */ });
+   gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits))
+  lightbox.refresh()
    if(data.hits.length === data.totalHits){
     return btnLoadMore.hidden = true;
  }
@@ -70,7 +71,7 @@ function onLoadMore (){
   fetchImages(inputQuery, page)
   .then(data => {
   gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits))
-  const lightboxLoadMore = new SimpleLightbox('.gallery a', { /* options */ });
+  lightbox.refresh()
   if(data.total === data.totalHits){
 Notiflix.Report.info("We're sorry, but you've reached the end of search results.");
  return btnLoadMore.hidden = true;
